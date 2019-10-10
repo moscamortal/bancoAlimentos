@@ -67,9 +67,13 @@ class ProdutoController extends Controller
      * @param  \App\Produto  $produto
      * @return \Illuminate\Http\Response
      */
-    public function edit(Produto $produto)
+    public function edit($id)
     {
-        //
+        $prod = Produto::find($id);
+        if(isset($prod)) {
+            return view('produtocreate', compact('prod'));
+        }
+        return redirect('/produto');
     }
 
     /**
@@ -90,8 +94,12 @@ class ProdutoController extends Controller
      * @param  \App\Produto  $produto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Produto $produto)
+    public function destroy($id)
     {
-        //
+        $prod = Produto::find($id);
+        if (isset($prod)){
+            $prod->delete();
+        }
+        return redirect('/produto');
     }
 }

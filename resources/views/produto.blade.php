@@ -23,7 +23,7 @@
                     <td>{{$produto->valor}}</td>
                     <td>
                         <a href="/produto/{{$produto->id}}/edit" class="btn btn-sm btn-primary">Editar</a>
-                        <a href="/produto/{{$produto->id}}" class="btn btn-sm btn-danger" method="DELETE">Apagar</a>
+                        <a href="/produto/delete/{{$produto->id}}" class="btn btn-sm btn-danger ">Apagar</a>
                     </td>
                 </tr>
     @endforeach                
