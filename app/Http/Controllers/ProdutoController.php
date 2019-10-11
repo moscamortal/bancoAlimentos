@@ -18,10 +18,15 @@ class ProdutoController extends Controller
         $this->middleware('auth');
     }
     
+    public function indexView()
+    {
+        return view('produto');
+    }
+    
     public function index()
     {
-        $produtos = Produto::all();
-        return view('produto', compact('produtos'));
+        $prods = Produto::all();
+        return $prods->toJson();
     }
 
     /**
@@ -43,11 +48,12 @@ class ProdutoController extends Controller
     public function store(Request $request)
     {
         $prod = new Produto();
-        $prod->nome = $request->input('nomeProduto');
-        $prod->valor = $request->input('precoProduto');
+        $prod->nome = $request->input('nome');
+        $prod->preco = $request->input('preco');
+        $prod->estoque = $request->input('estoque');
+        $prod->categoria_id = $request->input('categoria_id');
         $prod->save();
-        return redirect('/produto');
-
+        return json_encode($prod);
     }
 
     /**
@@ -56,9 +62,13 @@ class ProdutoController extends Controller
      * @param  \App\Produto  $produto
      * @return \Illuminate\Http\Response
      */
-    public function show(Produto $produto)
+    public function show($id)
     {
-        //
+        $prod = Produto::find($id);
+        if (isset($prod)) {
+            return json_encode($prod);            
+        }
+        return response('Produto não encontrado', 404);
     }
 
     /**
@@ -83,10 +93,18 @@ class ProdutoController extends Controller
      * @param  \App\Produto  $produto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produto $produto)
+    public function update(Request $request, $id)
     {
-        //
+        $prod = Produto::find($id);
+        if (isset($prod)) {
+            $prod->nome = $request->input('nome');
+            $prod->valor = $request->input('preco');
+            $prod->save();
+            return json_encode($prod);
+        }
+        return response('Produto não encontrado', 404);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -97,9 +115,10 @@ class ProdutoController extends Controller
     public function destroy($id)
     {
         $prod = Produto::find($id);
-        if (isset($prod)){
+        if (isset($prod)) {
             $prod->delete();
+            return response('OK', 200);
         }
-        return redirect('/produto');
+        return response('Produto não encontrado', 404);
     }
 }

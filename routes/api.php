@@ -13,6 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/latest', 'InternalApiController@latest');
+});
+
+Route::middleware('auth:api')->get('/user', function(Request $request) {
     return $request->user();
 });
+
+Route::resource('/produto', 'ProdutoController');
