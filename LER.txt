@@ -1,0 +1,22 @@
+Para funcionar execute:
+compose install
+npm install
+npm run dev
+
+Criar um banco chamado bancoAlimentos no mysql
+Subir o server mysql, com esse parametros ("Esse é o padrão do xamp"):
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=bancoalimentos
+DB_USERNAME=root
+DB_PASSWORD=
+
+Executar: php artisan migrate
+
+Comando para subir o servidor do projeto.
+php artisan serve
+
+As viwers estão na pasta
+resources/viwers
