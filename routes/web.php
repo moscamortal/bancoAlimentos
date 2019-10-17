@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('/home');
 });
 
 Auth::routes();
@@ -20,3 +20,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/produto', 'ProdutoController@indexView');
+
+Route::get('/admin/login', 'Auth\AdminLoginController@index')->name('admin.login');
+Route::post('/admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+
+Route::get('/admin', 'AdminController@index')->name('admin.dashboard');
